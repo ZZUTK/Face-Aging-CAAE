@@ -14,7 +14,7 @@ TensorFlow implementation of the paper [Age Progression/Regression by Conditiona
 ## Prepare the training dataset
 Download a training dataset with labels of age and gender. We use the [UTKFace](https://susanqq.github.io/UTKFace/) dataset in the demo. It is better to use algined and cropped faces. 
 
-Please save and unzip ```UTKFace.tar.gz``` to the folder ```data```. 
+Please save and unzip `UTKFace.tar.gz` to the folder `data`. 
 
 ## Training
 ```
