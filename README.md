@@ -1,4 +1,4 @@
-# Age Progression/Regression by Conditional Adversarial Autoencoder
+# Age Progression/Regression by Conditional Adversarial Autoencoder (CAAE)
 
 TensorFlow implementation of the paper [Age Progression/Regression by Conditional Adversarial Autoencoder](http://web.eecs.utk.edu/~zzhang61/docs/papers/2017_CVPR_Age.pdf).
 
@@ -31,18 +31,14 @@ $ python MAIN.py --is_train False
 
 
 ## A demo of training process
-<img src="https://github.com/ZZUTK/Age-Progression/blob/master/demo/demo_train.gif">
+<img src="demo/demo_train.gif">
 
 
 ## Files
-* [`FaceProgression.py`](https://github.com/ZZUTK/Age-Progression/blob/master/FaceProgression.py) is a class that builds and initialize the model, and implements training and testing related stuff
-    * [`ops.py`](https://github.com/ZZUTK/Age-Progression/blob/master/ops.py) consists of functions called by `FaceProgression.py` to implement options of convolution, deconvolution, fully connetion, leaky ReLU, batch normalization, load and save images, etc.
+* [`FaceAging.py`](FaceAging.py) is a class that builds and initialize the model, and implements training and testing related stuff
+* [`ops.py`](ops.py) consists of functions called by `FaceAging.py` to implement options of convolution, deconvolution, fully connetion, leaky ReLU, load and save images.   
+* [`main.py`](main.py) demonstrates `FaceAging.py`.
     
-* [`MAIN.py`](https://github.com/ZZUTK/Age-Progression/blob/master/MAIN.py) demonstrates `FaceProgression.py`.
-    * [`checkGPU.py`](https://github.com/ZZUTK/Age-Progression/blob/master/checkGPU.py) is called in `MAIN.py` to check GPU status, ensuring enough momery (defualt 3.2GB).
-    
-* [`run_lis.sh`](https://github.com/ZZUTK/Age-Progression/blob/master/run_list.sh) run a list of tests via bash 
-
 ## Citation
 Zhifei Zhang, Yang Song, and Hairong Qi. "Age Progression/Regression by Conditional Adversarial Autoencoder." *IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, 2017.
 ```
