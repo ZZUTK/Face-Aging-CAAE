@@ -51,7 +51,7 @@ The reconstruction loss vs. epoch is shown as follow, whose original record is s
 
 ## Testing
 ```
-$ python main.py --is_train False
+$ python main.py --is_train False --testdir your_image_dir
 ```
 
 
