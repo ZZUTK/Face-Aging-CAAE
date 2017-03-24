@@ -7,6 +7,7 @@ flags.DEFINE_integer(flag_name='epoch', default_value=50, docstring='number of e
 flags.DEFINE_boolean(flag_name='is_train', default_value=True, docstring='training mode')
 flags.DEFINE_string(flag_name='dataset', default_value='UTKFace', docstring='dataset name')
 flags.DEFINE_string(flag_name='savedir', default_value='save', docstring='dir for saving training results')
+flags.DEFINE_string(flag_name='testdir', default_value='None', docstring='dir for testing images')
 FLAGS = flags.FLAGS
 
 
@@ -33,7 +34,7 @@ def main(_):
         else:
             print '\n\tTesting Mode'
             model.custom_test(
-                testing_samples_dir='your_image_dir/*jpg'
+                testing_samples_dir=FLAGS.testdir + '/*jpg'
             )
 
 
