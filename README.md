@@ -54,6 +54,17 @@ The reconstruction loss vs. epoch is shown as follow, whose original record is s
 $ python main.py --is_train False --testdir your_image_dir
 ```
 
+```
+  Building graph ...
+
+	Testing Mode
+
+	Loading pre-trained model ...
+	SUCCESS ^_^
+
+	Done! Results are save as save/test/test_as_xxx.png
+```
+
 
 
 ## A demo of training process
