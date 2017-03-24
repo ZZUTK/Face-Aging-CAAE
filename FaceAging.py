@@ -685,9 +685,12 @@ class FaceAging(object):
         )
 
     def custom_test(self, testing_samples_dir):
-        if not load_checkpoint():
-            print 'Failed to load the model!'
+        if not self.load_checkpoint():
+            print("\tFAILED >_<!")
             exit(0)
+        else:
+            print("\tSUCCESS ^_^")
+
         num_samples = int(np.sqrt(self.size_batch))
         file_names = glob(testing_samples_dir)
         if len(file_names) < num_samples:
@@ -712,9 +715,13 @@ class FaceAging(object):
             shape=(num_samples, 2),
             dtype=np.float32
         ) * self.image_value_range[0]
-        for i in range(gender.shape[0]):
+        for i in range(gender_male.shape[0]):
             gender_male[i, 0] = self.image_value_range[-1]
-            gender_male[i, 1] = self.image_value_range[-1]
+            gender_female[i, 1] = self.image_value_range[-1]
+
         self.test(images, gender_male, 'test_as_male.png')
         self.test(images, gender_female, 'test_as_female.png')
+
+        print '\n\tDone! Results are save as %s\n' % os.path.join(self.save_dir, 'test', 'test_as_xxx.png')
+
 
