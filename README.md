@@ -25,15 +25,14 @@ The training process has been tested on NVIDIA TITAN X (12GB). The training time
 
 During the training, a new folder named `save` will be created, including four sub-folders: `summary`, `samples`, `test`, and `checkpoint`.
 
+* `samples` saves the reconstructed faces at each epoch.
+* `test` saves the testing results at each epoch (generated faces at different ages based on input faces).
+* `checkpoint` save the model.
 * `summary` saves the batch-wise losses and intermediate outputs. To visualize the summary, 
 ```
 $ cd save/summary
 $ tensorboard --logdir .
 ```
-* `samples` saves the reconstructed faces at each epoch.
-* `test` saves the testing results at each epoch (generated faces at different ages based on input faces).
-* `checkpoint` save the model.
-
 
 ## Testing
 ```
