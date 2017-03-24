@@ -60,6 +60,10 @@ $ python main.py --is_train False
 
 The first row shows the input faces of different ages, and the other rows show the improvement of the output faces at each two epoch. From top to bottom, the output faces are in the age ascending order. 
 
+<p align="center">
+  <img src="demo/demo_train.gif" width="800">
+</p>
+
 <img src="demo/demo_train.gif">
 
 
