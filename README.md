@@ -66,7 +66,7 @@ Then, it is supposed to print out the following message.
 	Done! Results are saved as save/test/test_as_xxx.png
 ```
 
-Specifically, the testing faces will be processed twice, being considered as male and female, respectively. Therefore, the saved files are named as `test_as_male.png` and `test_as_female.png`, respectively. To achieve better results, it is necessary to train on a large and diverce dataset.
+Specifically, the testing faces will be processed twice, being considered as male and female, respectively. Therefore, the saved files are named as `test_as_male.png` and `test_as_female.png`, respectively. To achieve better results, it is necessary to train on a large and diverse dataset.
 
 ## A demo of training process
 
