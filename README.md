@@ -63,7 +63,7 @@ Then, it will print out the following message.
 	Loading pre-trained model ...
 	SUCCESS ^_^
 
-	Done! Results are save as save/test/test_as_xxx.png
+	Done! Results are saved as save/test/test_as_xxx.png
 ```
 
 
