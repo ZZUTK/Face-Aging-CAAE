@@ -27,7 +27,7 @@ During the training, a new folder named `save` will be created, including four s
 
 * `samples` saves the reconstructed faces at each epoch.
 * `test` saves the testing results at each epoch (generated faces at different ages based on input faces).
-* `checkpoint` save the model.
+* `checkpoint` saves the model.
 * `summary` saves the batch-wise losses and intermediate outputs. To visualize the summary, 
 ```
 $ cd save/summary
