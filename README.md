@@ -38,8 +38,8 @@ After the training, the reconstruction loss (EG_loss) vs. epoch will be
 <img src="demo/loss_epoch.png" width="500">
 
 The reconstruction and testing results are shown as follow.
-<img src="demo/sample.png" width="500">
-<img src="demo/test.png" width="500">
+<img src="demo/sample.png" width="300">
+<img src="demo/test.png" width="300">
 
 ## Testing
 ```
