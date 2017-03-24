@@ -55,7 +55,7 @@ $ python main.py --is_train False --testdir your_image_dir
 ```
 
 ```
-  Building graph ...
+  	Building graph ...
 
 	Testing Mode
 
