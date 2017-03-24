@@ -34,7 +34,7 @@ $ cd save/summary
 $ tensorboard --logdir .
 ```
 
-After the training, you can check the folders `samples` and `test` to visulized the reconstruction and testing performance, respectively. The following shows the reconstruction (left) and testing (right) results. The first row in the reconstruction results (left) are testing samples that yield the testing results (right) in age ascending order from top to bottom.
+After the training, you can check the folders `samples` and `test` to visulize the reconstruction and testing performance, respectively. The following shows the reconstruction (left) and testing (right) results. The first row in the reconstruction results (left) are testing samples that yield the testing results (right) in age ascending order from top to bottom.
 
 <p align="center">
   <img src="demo/sample.png" width="430"> &nbsp <img src="demo/test.png" width="430">
