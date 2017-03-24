@@ -40,7 +40,7 @@ After the training, you can check the folders `samples` and `test` to visulize t
   <img src="demo/sample.png" width="430"> &nbsp <img src="demo/test.png" width="430">
 </p>
 
-The reconstruction loss vs. epoch is shown as follow.
+The reconstruction loss vs. epoch is shown as follow, which is saved originally in the folder `summary`.
 
 <p align="center">
   <img src="demo/loss_epoch.png" width="500">
