@@ -34,18 +34,20 @@ $ cd save/summary
 $ tensorboard --logdir .
 ```
 
-After the training, the reconstruction loss (EG_loss) vs. epoch will be
+After the training, you can check the folders `samples` and `test` to visulized the reconstruction and testing performance, respectively. The following shows the reconstruction (left) and testing (right) results. The first row in the reconstruction results (left) are testing samples that yield the testing results (right) in age ascending order from top to bottom.
+
+<p align="center">
+  <img src="demo/sample.png" width="430"> &nbsp <img src="demo/test.png" width="430">
+</p>
+
+The reconstruction loss vs. epoch is shown as follow.
 
 <p align="center">
   <img src="demo/loss_epoch.png" width="500">
 </p>
 
 
-The reconstruction (left) and testing (right) results are shown as follow. The first row in the reconstruction results (left) are testing samples that yield the testing results (right) in age ascending order from top to bottom.
 
-<p align="center">
-  <img src="demo/sample.png" width="430"> &nbsp <img src="demo/test.png" width="430">
-</p>
 
 ## Testing
 ```
