@@ -33,7 +33,7 @@ def main(_):
         else:
             print '\n\tTesting Mode'
             model.custom_test(
-                testing_samples_dir='./your_image_dir/*jpg'
+                testing_samples_dir='your_image_dir/*jpg'
             )
 
 
