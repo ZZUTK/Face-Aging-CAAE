@@ -39,7 +39,7 @@ After the training, the reconstruction loss (EG_loss) vs. epoch will be
 
 The reconstruction and testing results are shown as follow. The first row in the reconstruction results (left) are testing samples that yield the testing results(right).
 
-<img src="demo/sample.png" width="340"><img src="demo/test.png" width="340">
+<img src="demo/sample.png" width="380"> <img src="demo/test.png" width="380">
 
 ## Testing
 ```
