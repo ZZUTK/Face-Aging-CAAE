@@ -14,7 +14,7 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 * [Training dataset (Aligend&Cropped Faces)](https://drive.google.com/file/d/0BxYys69jI14kYVM3aVhKS1VhRUk/view?usp=sharing)
 
 ## Prepare the training dataset
-Download a training dataset with labels of age and gender. We use the [UTKFace](https://susanqq.github.io/UTKFace/) dataset in the demo. It is better to use algined and cropped faces. 
+You may used any dataset with labels of age and gender. In this demo, we use the [UTKFace](https://susanqq.github.io/UTKFace/) dataset. It is better to use algined and cropped faces. 
 
 Please save and unzip `UTKFace.tar.gz` to the folder `data`. 
 
