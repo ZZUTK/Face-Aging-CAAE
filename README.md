@@ -23,6 +23,8 @@ $ python MAIN.py
 
 The training process has been tested on NVIDIA TITAN X (12GB). The training time of 50 epochs on UTKFace (23,708 images in the size of 128x128x3) is about two and a half hours.
 
+During the training, a new folder named `save` will be created, including four sub-folders: `summary`, `samples`, `test`, `checkpoint`.
+
 ## Testing
 ```
 $ python MAIN.py --is_train False
