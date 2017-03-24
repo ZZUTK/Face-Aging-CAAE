@@ -2,7 +2,7 @@
 
 TensorFlow implementation of the algorithm in the paper [Age Progression/Regression by Conditional Adversarial Autoencoder](http://web.eecs.utk.edu/~zzhang61/docs/papers/2017_CVPR_Age.pdf).
 
-<div style="text-align:center"><img src="demo/method.png" width="500"></div>
+<div style="text-align:center"><img src="demo/method.png" width="500"/></div>
 
 <img src="demo/method.png" width="500">
 
