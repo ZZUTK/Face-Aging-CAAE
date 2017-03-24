@@ -18,7 +18,7 @@ Please save and unzip `UTKFace.tar.gz` to the folder `data`.
 
 ## Training
 ```
-$ python MAIN.py
+$ python main.py
 ```
 
 The training process has been tested on NVIDIA TITAN X (12GB). The training time of 50 epochs on UTKFace (23,708 images in the size of 128x128x3) is about two and a half hours.
@@ -36,7 +36,7 @@ $ tensorboard --logdir .
 
 ## Testing
 ```
-$ python MAIN.py --is_train False
+$ python main.py --is_train False
 ```
 
 
