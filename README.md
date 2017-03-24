@@ -42,6 +42,9 @@ $ python main.py --is_train False
 
 
 ## A demo of training process
+
+The first row shows the input faces of different ages, and the other rows show the improvement of the output faces at each two epoch. From top to bottom, the output faces are in the age ascending order. 
+
 <img src="demo/demo_train.gif">
 
 
