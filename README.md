@@ -37,9 +37,10 @@ $ tensorboard --logdir .
 After the training, the reconstruction loss (EG_loss) vs. epoch will be
 <img src="demo/loss_epoch.png" width="500">
 
-The reconstruction and testing results are shown as follow.
-<img src="demo/sample.png" width="300">
-<img src="demo/test.png" width="300">
+The reconstruction and testing results are shown as follow. The first row in the reconstruction results (left) are testing samples that yield the testing results(right).
+
+<img src="demo/sample.png" width="400">
+<img src="demo/test.png" width="400">
 
 ## Testing
 ```
