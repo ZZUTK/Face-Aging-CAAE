@@ -34,6 +34,13 @@ $ cd save/summary
 $ tensorboard --logdir .
 ```
 
+After the training, the reconstruction loss (EG_loss) vs. epoch will be
+<img src="demo/loss_epoch.png" width="500">
+
+The reconstruction and testing results are shown as follow.
+<img src="demo/sample.png" width="500">
+<img src="demo/test.png" width="500">
+
 ## Testing
 ```
 $ python main.py --is_train False
