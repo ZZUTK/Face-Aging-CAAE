@@ -3,12 +3,8 @@
 TensorFlow implementation of the algorithm in the paper [Age Progression/Regression by Conditional Adversarial Autoencoder](http://web.eecs.utk.edu/~zzhang61/docs/papers/2017_CVPR_Age.pdf).
 
 <p align="center">
-  <img src="demo/method.png" width="500" />
+  <img src="demo/method.png" width="500">
 </p>
-
-<div style="text-align:center"><img src="demo/method.png" width="500"/></div>
-
-<img src="demo/method.png" width="500">
 
 
 ## Pre-requisites
@@ -41,7 +37,11 @@ $ tensorboard --logdir .
 ```
 
 After the training, the reconstruction loss (EG_loss) vs. epoch will be
-<img src="demo/loss_epoch.png" width="500">
+
+<p align="center">
+  <img src="demo/loss_epoch.png" width="500">
+</p>
+
 
 The reconstruction and testing results are shown as follow. The first row in the reconstruction results (left) are testing samples that yield the testing results(right).
 
