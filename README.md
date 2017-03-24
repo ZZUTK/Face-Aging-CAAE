@@ -53,7 +53,7 @@ The reconstruction loss vs. epoch is shown as follow, whose original record is s
 ```
 $ python main.py --is_train False --testdir your_image_dir
 ```
-Then, it will print out the following message.
+Then, it is supposed to print out the following message.
 
 ```
   	Building graph ...
