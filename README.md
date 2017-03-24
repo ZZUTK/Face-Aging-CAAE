@@ -66,6 +66,8 @@ Then, it is supposed to print out the following message.
 	Done! Results are saved as save/test/test_as_xxx.png
 ```
 
+Specifically, the testing faces will be processed twice, being considered as male and female, respectively. Therefore, the saved files are names as `test_as_male.png` and `test_as_female.png`, respectively.
+
 ## A demo of training process
 
 The first row shows the input faces of different ages, and the other rows show the improvement of the output faces at each two epoch. From top to bottom, the output faces are in the age ascending order. 
