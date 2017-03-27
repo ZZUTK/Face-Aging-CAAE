@@ -14,14 +14,12 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 
 ## Datasets
 * FGNET
-* MORPH
-* CADA
-* Part of [UTKFace](https://susanqq.github.io/UTKFace/)
-
-[Training dataset (Aligend&Cropped Faces)](https://drive.google.com/file/d/0BxYys69jI14kYVM3aVhKS1VhRUk/view?usp=sharing)
+* [MORPH](https://ebill.uncw.edu/C20231_ustores/web/product_detail.jsp?PRODUCTID=8)
+* [CACD](http://bcsiriuschen.github.io/CARC/)
+* [UTKFace](https://susanqq.github.io/UTKFace/)
 
 ## Prepare the training dataset
-You may used any dataset with labels of age and gender. In this demo, we use the [UTKFace](https://susanqq.github.io/UTKFace/) dataset. It is better to use algined and cropped faces. Please save and unzip `UTKFace.tar.gz` to the folder `data`. 
+You may used any dataset with labels of age and gender. In this demo, we use the [UTKFace](https://susanqq.github.io/UTKFace/) dataset. It is better to use [algined and cropped faces](https://drive.google.com/file/d/0BxYys69jI14kYVM3aVhKS1VhRUk/view?usp=sharing). Please save and unzip `UTKFace.tar.gz` to the folder `data`. 
 
 ## Training
 ```
