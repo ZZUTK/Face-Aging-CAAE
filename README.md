@@ -19,7 +19,7 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 * [UTKFace](https://susanqq.github.io/UTKFace/)
 
 ## Prepare the training dataset
-You may use any dataset with labels of age and gender. In this demo, we use the [UTKFace](https://susanqq.github.io/UTKFace/) dataset. It is better to use [algined and cropped faces](https://drive.google.com/file/d/0BxYys69jI14kYVM3aVhKS1VhRUk/view?usp=sharing). Please save and unzip `UTKFace.tar.gz` to the folder `data`. 
+You may use any dataset with labels of age and gender. In this demo, we use the [UTKFace](https://susanqq.github.io/UTKFace/) dataset. It is better to use [aligned and cropped faces](https://drive.google.com/file/d/0BxYys69jI14kYVM3aVhKS1VhRUk/view?usp=sharing). Please save and unzip `UTKFace.tar.gz` to the folder `data`. 
 
 ## Training
 ```
