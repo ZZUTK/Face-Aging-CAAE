@@ -16,7 +16,7 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 * FGNET
 * [MORPH](https://ebill.uncw.edu/C20231_ustores/web/product_detail.jsp?PRODUCTID=8)
 * [CACD](http://bcsiriuschen.github.io/CARC/)
-* [UTKFace](https://susanqq.github.io/UTKFace/)
+* UTKFace (Access from the [Github link](https://susanqq.github.io/UTKFace/) or the [Wiki link](http://aicip.eecs.utk.edu/wiki/UTKFace))
 
 ## Prepare the training dataset
 You may use any dataset with labels of age and gender. In this demo, we use the UTKFace dataset. It is better to use [aligned and cropped faces](https://drive.google.com/file/d/0BxYys69jI14kYVM3aVhKS1VhRUk/view?usp=sharing). Please save and unzip `UTKFace.tar.gz` to the folder `data`. 
@@ -26,9 +26,9 @@ You may use any dataset with labels of age and gender. In this demo, we use the 
 $ python main.py
 ```
 
-The training process has been tested on NVIDIA TITAN X (12GB). The training time of 50 epochs on UTKFace (23,708 images in the size of 128x128x3) is about two and a half hours.
+The training process has been tested on NVIDIA TITAN X (12GB). The training time for 50 epochs on UTKFace (23,708 images in the size of 128x128x3) is about two and a half hours.
 
-During the training, a new folder named `save` will be created, including four sub-folders: `summary`, `samples`, `test`, and `checkpoint`.
+During training, a new folder named `save` will be created, including four sub-folders: `summary`, `samples`, `test`, and `checkpoint`.
 
 * `samples` saves the reconstructed faces at each epoch.
 * `test` saves the testing results at each epoch (generated faces at different ages based on input faces).
@@ -39,13 +39,13 @@ $ cd save/summary
 $ tensorboard --logdir .
 ```
 
-After the training, you can check the folders `samples` and `test` to visualize the reconstruction and testing performance, respectively. The following shows the reconstruction (left) and testing (right) results. The first row in the reconstruction results (left) are testing samples that yield the testing results (right) in age ascending order from top to bottom.
+After training, you can check the folders `samples` and `test` to visualize the reconstruction and testing performance, respectively. The following shows the reconstruction (left) and testing (right) results. The first row in the reconstruction results (left) are testing samples that yield the testing results (right) in the age ascending order from top to bottom.
 
 <p align="center">
   <img src="demo/sample.png" width="400">  <img src="demo/test.png" width="400">
 </p>
 
-The reconstruction loss vs. epoch is shown as follow, which was passed through a low-pass filter for visualization purposes. The original record is saved in the folder `summary`.
+The reconstruction loss vs. epoch is shown below, which was passed through a low-pass filter for visualization purpose. The original record is saved in folder `summary`.
 
 <p align="center">
   <img src="demo/loss_epoch.jpg" width="600">
@@ -71,19 +71,19 @@ Then, it is supposed to print out the following message.
 	Done! Results are saved as save/test/test_as_xxx.png
 ```
 
-Specifically, the testing faces will be processed twice, being considered as male and female, respectively. Therefore, the saved files are named as `test_as_male.png` and `test_as_female.png`, respectively. To achieve better results, it is necessary to train on a large and diverse dataset.
+Specifically, the testing faces will be processed twice, being considered as male and female, respectively. Therefore, the saved files are named `test_as_male.png` and `test_as_female.png`, respectively. To achieve better results, it is necessary to train on a large and diverse dataset.
 
 ## A demo of training process
 
-The first row shows the input faces of different ages, and the other rows show the improvement of the output faces at each two epoch. From top to bottom, the output faces are in the age ascending order. 
+The first row shows the input faces of different ages, and the other rows show the improvement of the output faces at every other epoch. From top to bottom, the output faces are in the age ascending order. 
 
 <p align="center">
   <img src="demo/demo_train.gif" width="800">
 </p>
 
 ## Files
-* [`FaceAging.py`](FaceAging.py) is a class that builds and initialize the model, and implements training and testing related stuff
-* [`ops.py`](ops.py) consists of functions called by `FaceAging.py` to implement options of convolution, deconvolution, fully connetion, leaky ReLU, load and save images.   
+* [`FaceAging.py`](FaceAging.py) is a class that builds and initializes the model, and implements training and testing related stuff
+* [`ops.py`](ops.py) consists of functions called `FaceAging.py` to implement options of convolution, deconvolution, fully connection, leaky ReLU, load and save images.   
 * [`main.py`](main.py) demonstrates `FaceAging.py`.
     
 ## Citation
