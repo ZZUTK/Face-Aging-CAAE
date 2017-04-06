@@ -10,7 +10,7 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 ## Pre-requisites
 * Python 2.7x
 * Scipy
-* TensorFlow (API r0.12)
+* TensorFlow (r0.12)
 
 ## Datasets
 * FGNET
