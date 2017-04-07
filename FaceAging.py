@@ -79,7 +79,7 @@ class FaceAging(object):
 
         # encoder: input image --> z
         self.z = self.encoder(
-            image=self.input_image,
+            image=self.input_image
         )
 
         # generator: z + label --> generated image
