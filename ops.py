@@ -107,7 +107,7 @@ def save_batch_images(
         size_frame = [auto_size, auto_size]
     img_h, img_w = batch_images.shape[1], batch_images.shape[2]
     frame = np.zeros([img_h * size_frame[0], img_w * size_frame[1], 3])
-    for ind, image in enumerate(batch_images):
+    for ind, image in enumerate(images):
         ind_col = ind % size_frame[1]
         ind_row = ind // size_frame[1]
         frame[(ind_row * img_h):(ind_row * img_h + img_h), (ind_col * img_w):(ind_col * img_w + img_w), :] = image
