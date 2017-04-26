@@ -528,8 +528,7 @@ class FaceAging(object):
         # output
         return tf.nn.tanh(current)
 
-    def discriminator_z(self, z, is_training=True, reuse_variables=False, num_hidden_layer_channels=(64, 32, 16)):
-        enable_bn = True
+    def discriminator_z(self, z, is_training=True, reuse_variables=False, num_hidden_layer_channels=(64, 32, 16), enable_bn=True):
         if reuse_variables:
             tf.get_variable_scope().reuse_variables()
         current = z
@@ -560,8 +559,7 @@ class FaceAging(object):
         )
         return tf.nn.sigmoid(current), current
 
-    def discriminator_img(self, image, y, gender, is_training=True, reuse_variables=False, num_hidden_layer_channels=(16, 32, 64, 128)):
-        enable_bn = True
+    def discriminator_img(self, image, y, gender, is_training=True, reuse_variables=False, num_hidden_layer_channels=(16, 32, 64, 128), enable_bn=True):
         if reuse_variables:
             tf.get_variable_scope().reuse_variables()
         num_layers = len(num_hidden_layer_channels)
