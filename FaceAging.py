@@ -2,9 +2,7 @@
 # Zhifei Zhang, Yang Song, and Hairong Qi. "Age Progression/Regression by Conditional Adversarial Autoencoder."
 # IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2017.
 #
-# Author:   Zhifei Zhang and Yang Song
 # Date:     Mar. 24th, 2017
-# Email:    {zzhang61, ysong18}@vols.utk.edu
 #
 # Please cite above paper if you use this code
 #
