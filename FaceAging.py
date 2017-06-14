@@ -198,7 +198,7 @@ class FaceAging(object):
 
         # *********************************** optimizer **************************************************************
         # over all, there are three loss functions, weights may differ from the paper because of different datasets
-        self.loss_EG = self.EG_loss + 1e-5 * self.G_img_loss + 0.000 * self.E_z_loss + 0.000 * self.tv_loss # slightly increase the params  
+        self.loss_EG = self.EG_loss + 0.000 * self.G_img_loss + 0.000 * self.E_z_loss + 0.000 * self.tv_loss # slightly increase the params  
         self.loss_Dz = self.D_z_loss_prior + self.D_z_loss_z
         self.loss_Di = self.D_img_loss_input + self.D_img_loss_G
 
