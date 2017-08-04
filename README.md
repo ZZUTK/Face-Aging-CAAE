@@ -97,3 +97,4 @@ Zhifei Zhang, Yang Song, and Hairong Qi. "Age Progression/Regression by Conditio
   year={2017}
 }
 ```
+[Spotlight presentation](https://youtu.be/425rPG580dQ)
