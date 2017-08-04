@@ -4,7 +4,6 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 
 <p align="center">
   <img src="demo/method.png" width="500">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/425rPG580dQ" frameborder="0" allowfullscreen></iframe>
 </p>
 
 
