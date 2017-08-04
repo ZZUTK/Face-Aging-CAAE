@@ -6,6 +6,8 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
   <img src="demo/method.png" width="500">
 </p>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/425rPG580dQ" frameborder="0" allowfullscreen></iframe>
+
 
 ## Pre-requisites
 * Python 2.7x
