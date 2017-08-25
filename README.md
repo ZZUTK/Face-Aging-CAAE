@@ -13,6 +13,28 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 * TensorFlow (r0.12)
     * Please note that you will get errors if running with TensorFlow r1.0 because the definition of input arguments of some functions have changed, *e.g.*, `tf.concat` and `tf.nn.sigmoid_cross_entropy_with_logits`. 
 
+
+* Linux (GPU)
+```bash
+conda create -n py27_tf012 python=2.7
+source activate py27_tf012
+pip install --ignore-installed https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-0.12.1-cp27-none-linux_x86_64.whl
+pip install scipy
+conda install PIL
+
+```
+
+* Mac (CPU Only)
+```bash
+conda create -n py27_tf012 python=2.7
+source activate py27_tf012
+pip install --ignore-installed https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.12.1-py2-none-any.whl
+pip install scipy
+conda install PIL
+
+```
+
+
 ## Datasets
 * FGNET
 * [MORPH](https://ebill.uncw.edu/C20231_ustores/web/product_detail.jsp?PRODUCTID=8)
@@ -24,7 +46,9 @@ You may use any dataset with labels of age and gender. In this demo, we use the 
 
 ## Training
 ```
-$ python main.py
+$ python main.py --dataset UTKFace
+or
+$ python main.py --dataset InTheWild
 ```
 
 The training process has been tested on NVIDIA TITAN X (12GB). The training time for 50 epochs on UTKFace (23,708 images in the size of 128x128x3) is about two and a half hours.
