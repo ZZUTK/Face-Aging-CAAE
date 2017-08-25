@@ -15,7 +15,7 @@ import tensorflow as tf
 import numpy as np
 from scipy.io import savemat
 from ops import *
-
+import random
 
 class FaceAging(object):
     def __init__(self,
@@ -255,7 +255,7 @@ class FaceAging(object):
         self.writer = tf.summary.FileWriter(os.path.join(self.save_dir, 'summary'), self.session.graph)
 
         # ************* get some random samples as testing data to visualize the learning process *********************
-        sample_files = file_names[0:self.size_batch]
+        sample_files = random.sample(file_names, self.size_batch)
         file_names[0:self.size_batch] = []
         sample = [load_image(
             image_path=sample_file,
