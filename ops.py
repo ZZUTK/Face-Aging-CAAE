@@ -1,7 +1,7 @@
 from __future__ import division
 import tensorflow as tf
 import numpy as np
-from scipy.misc import imread, imresize, imsave
+from scipy.misc.pilutil import imread, imresize, imsave
 
 
 def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d'):
