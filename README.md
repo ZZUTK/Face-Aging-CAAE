@@ -9,7 +9,7 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 
 ## Pre-requisites
 * Python 2.7x
-* Scipy
+* Scipy 1.0.0
 * ~~TensorFlow (r0.12)~~
     * ~~Please note that you will get errors if running with TensorFlow r1.0 because the definition of input arguments of some functions have changed, *e.g.*, `tf.concat` and `tf.nn.sigmoid_cross_entropy_with_logits`.~~ 
     
