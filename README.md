@@ -54,8 +54,15 @@ The reconstruction loss vs. epoch is shown below, which was passed through a low
   <img src="demo/loss_epoch.jpg" width="600">
 </p>
 
-
-
+## Custom Training
+```
+$ python main.py
+    --dataset		default 'UTKFace'. Please put your own dataset in ./data
+    --savedir		default 'save'. Please use a meaningful name, e.g., save_init_model.
+    --epoch		default 50.
+    --use_trained_model	default True. If use a trained model, savedir specifies the model name. 
+    --use_init_model	default True. If load the trained model failed, use the init model save in ./init_model 
+```
 
 ## Testing
 ```
