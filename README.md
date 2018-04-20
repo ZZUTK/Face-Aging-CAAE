@@ -66,8 +66,9 @@ $ python main.py
 
 ## Testing
 ```
-$ python main.py --is_train False --testdir your_image_dir
+$ python main.py --is_train False --testdir your_image_dir --savedir save
 ```
+**Note**: `savedir` specifies the model named save in the training.
 Then, it is supposed to print out the following message.
 
 ```
