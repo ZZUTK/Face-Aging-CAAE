@@ -88,7 +88,7 @@ def load_image(
     if is_gray:
         image = imread(image_path, flatten=True).astype(np.float32)
     else:
-        image = imread(image_path).astype(np.float32)
+        image = imread(image_path, mode="RGB").astype(np.float32)
     image = imresize(image, [image_size, image_size])
     image = image.astype(np.float32) * (image_value_range[-1] - image_value_range[0]) / 255.0 + image_value_range[0]
     return image
