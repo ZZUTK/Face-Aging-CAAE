@@ -68,7 +68,7 @@ $ python main.py
 ```
 $ python main.py --is_train False --testdir your_image_dir --savedir save
 ```
-**Note**: `savedir` specifies the model name saved in the training. By default, the trained model is saved in the folder ./save.
+**Note**: `savedir` specifies the model name saved in the training. By default, the trained model is saved in the folder save (i.e., the model name).
 Then, it is supposed to print out the following message.
 
 ```
