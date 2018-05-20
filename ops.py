@@ -6,7 +6,8 @@ from scipy.misc.pilutil import imread, imresize, imsave
 
 def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d'):
     with tf.variable_scope(name):
-        stddev = np.sqrt(2.0 / (np.sqrt(input_map.get_shape()[-1].value * num_output_channels) * size_kernel ** 2))
+        # stddev = np.sqrt(2.0 / (np.sqrt(input_map.get_shape()[-1].value * num_output_channels) * size_kernel ** 2))
+        stddev = .02
         kernel = tf.get_variable(
             name='w',
             shape=[size_kernel, size_kernel, input_map.get_shape()[-1], num_output_channels],
@@ -25,7 +26,8 @@ def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d
 
 def fc(input_vector, num_output_length, name='fc'):
     with tf.variable_scope(name):
-        stddev = np.sqrt(1.0 / (np.sqrt(input_vector.get_shape()[-1].value * num_output_length)))
+        # stddev = np.sqrt(1.0 / (np.sqrt(input_vector.get_shape()[-1].value * num_output_length)))
+        stddev = .02
         w = tf.get_variable(
             name='w',
             shape=[input_vector.get_shape()[1], num_output_length],
@@ -43,7 +45,8 @@ def fc(input_vector, num_output_length, name='fc'):
 
 def deconv2d(input_map, output_shape, size_kernel=5, stride=2, stddev=0.02, name='deconv2d'):
     with tf.variable_scope(name):
-        stddev = np.sqrt(1.0 / (np.sqrt(input_map.get_shape()[-1].value * output_shape[-1]) * size_kernel ** 2))
+        # stddev = np.sqrt(1.0 / (np.sqrt(input_map.get_shape()[-1].value * output_shape[-1]) * size_kernel ** 2))
+        stddev = .02
         # filter : [height, width, output_channels, in_channels]
         kernel = tf.get_variable(
             name='w',
@@ -73,10 +76,10 @@ def concat_label(x, label, duplicate=1):
     label = tf.tile(label, [1, duplicate])
     label_shape = label.get_shape().as_list()
     if len(x_shape) == 2:
-        return tf.concat(1, [x, label])
+        return tf.concat(axis=1, values=[x, label])
     elif len(x_shape) == 4:
         label = tf.reshape(label, [x_shape[0], 1, 1, label_shape[-1]])
-        return tf.concat(3, [x, label*tf.ones([x_shape[0], x_shape[1], x_shape[2], label_shape[-1]])])
+        return tf.concat(axis=3, values=[x, label*tf.ones([x_shape[0], x_shape[1], x_shape[2], label_shape[-1]])])
 
 
 def load_image(
@@ -86,9 +89,9 @@ def load_image(
         is_gray=False,  # gray scale or color image
 ):
     if is_gray:
-        image = imread(image_path, flatten=True).astype(np.float32)
+        image = imread(image_path, mode='L').astype(np.float32)
     else:
-        image = imread(image_path).astype(np.float32)
+        image = imread(image_path, mode='RGB').astype(np.float32)
     image = imresize(image, [image_size, image_size])
     image = image.astype(np.float32) * (image_value_range[-1] - image_value_range[0]) / 255.0 + image_value_range[0]
     return image

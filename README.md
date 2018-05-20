@@ -9,10 +9,12 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 
 ## Pre-requisites
 * Python 2.7x
-* Scipy
+* Scipy 1.0.0
 * Pillow
-* TensorFlow (r0.12)
-    * Please note that you will get errors if running with TensorFlow r1.0 because the definition of input arguments of some functions have changed, *e.g.*, `tf.concat` and `tf.nn.sigmoid_cross_entropy_with_logits`. 
+* ~~TensorFlow (r0.12)~~
+    * ~~Please note that you will get errors if running with TensorFlow r1.0 because the definition of input arguments of some functions have changed, *e.g.*, `tf.concat` and `tf.nn.sigmoid_cross_entropy_with_logits`.~~ 
+    
+* The code is updated to run with Tensorflow 1.7.0 in recent days, and an initial model is provided to better initialize the network. The old version is backed up to the folder `old_version`. 
 
 ## Datasets
 * FGNET
@@ -53,13 +55,21 @@ The reconstruction loss vs. epoch is shown below, which was passed through a low
   <img src="demo/loss_epoch.jpg" width="600">
 </p>
 
-
-
+## Custom Training
+```
+$ python main.py
+    --dataset		default 'UTKFace'. Please put your own dataset in ./data
+    --savedir		default 'save'. Please use a meaningful name, e.g., save_init_model.
+    --epoch		default 50.
+    --use_trained_model	default True. If use a trained model, savedir specifies the model name. 
+    --use_init_model	default True. If load the trained model failed, use the init model save in ./init_model 
+```
 
 ## Testing
 ```
-$ python main.py --is_train False --testdir your_image_dir
+$ python main.py --is_train False --testdir your_image_dir --savedir save
 ```
+**Note**: `savedir` specifies the model name saved in the training. By default, the trained model is saved in the folder save (i.e., the model name).
 Then, it is supposed to print out the following message.
 
 ```

@@ -126,23 +126,23 @@ class FaceAging(object):
 
         # loss function of discriminator on z
         self.D_z_loss_prior = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(self.D_z_prior_logits, tf.ones_like(self.D_z_prior_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_z_prior_logits, labels=tf.ones_like(self.D_z_prior_logits))
         )
         self.D_z_loss_z = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(self.D_z_logits, tf.zeros_like(self.D_z_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_z_logits, labels=tf.zeros_like(self.D_z_logits))
         )
         self.E_z_loss = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(self.D_z_logits, tf.ones_like(self.D_z_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_z_logits, labels=tf.ones_like(self.D_z_logits))
         )
         # loss function of discriminator on image
         self.D_img_loss_input = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(self.D_input_logits, tf.ones_like(self.D_input_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_input_logits, labels=tf.ones_like(self.D_input_logits))
         )
         self.D_img_loss_G = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(self.D_G_logits, tf.zeros_like(self.D_G_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_G_logits, labels=tf.zeros_like(self.D_G_logits))
         )
         self.G_img_loss = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(self.D_G_logits, tf.ones_like(self.D_G_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_G_logits, labels=tf.ones_like(self.D_G_logits))
         )
 
         # total variation to smooth the generated image
@@ -178,7 +178,7 @@ class FaceAging(object):
         self.D_G_logits_summary = tf.summary.histogram('D_G_logits', self.D_G_logits)
         self.D_input_logits_summary = tf.summary.histogram('D_input_logits', self.D_input_logits)
         # for saving the graph and variables
-        self.saver = tf.train.Saver(max_to_keep=10)
+        self.saver = tf.train.Saver(max_to_keep=2)
 
     def train(self,
               num_epochs=200,  # number of epochs
@@ -186,7 +186,9 @@ class FaceAging(object):
               beta1=0.5,  # parameter for Adam optimizer
               decay_rate=1.0,  # learning rate decay (0, 1], 1 means no decay
               enable_shuffle=True,  # enable shuffle of the dataset
-              use_trained_model=True,  # used the saved checkpoint to initialize the model
+              use_trained_model=True,  # use the saved checkpoint to initialize the network
+              use_init_model=True,  # use the init model to initialize the network
+              weigts=(0.0001, 0, 0)  # the weights of adversarial loss and TV loss
               ):
 
         # *************************** load file names of images ******************************************************
@@ -198,7 +200,7 @@ class FaceAging(object):
 
         # *********************************** optimizer **************************************************************
         # over all, there are three loss functions, weights may differ from the paper because of different datasets
-        self.loss_EG = self.EG_loss + 0.000 * self.G_img_loss + 0.000 * self.E_z_loss + 0.000 * self.tv_loss # slightly increase the params  
+        self.loss_EG = self.EG_loss + weigts[0] * self.G_img_loss + weigts[1] * self.E_z_loss + weigts[2] * self.tv_loss # slightly increase the params
         self.loss_Dz = self.D_z_loss_prior + self.D_z_loss_z
         self.loss_Di = self.D_img_loss_input + self.D_img_loss_G
 
@@ -213,32 +215,33 @@ class FaceAging(object):
         )
 
         # optimizer for encoder + generator
-        self.EG_optimizer = tf.train.AdamOptimizer(
-            learning_rate=EG_learning_rate,
-            beta1=beta1
-        ).minimize(
-            loss=self.loss_EG,
-            global_step=self.EG_global_step,
-            var_list=self.E_variables + self.G_variables
-        )
+        with tf.variable_scope('opt', reuse=tf.AUTO_REUSE):
+            self.EG_optimizer = tf.train.AdamOptimizer(
+                learning_rate=EG_learning_rate,
+                beta1=beta1
+            ).minimize(
+                loss=self.loss_EG,
+                global_step=self.EG_global_step,
+                var_list=self.E_variables + self.G_variables
+            )
 
-        # optimizer for discriminator on z
-        self.D_z_optimizer = tf.train.AdamOptimizer(
-            learning_rate=EG_learning_rate,
-            beta1=beta1
-        ).minimize(
-            loss=self.loss_Dz,
-            var_list=self.D_z_variables
-        )
+            # optimizer for discriminator on z
+            self.D_z_optimizer = tf.train.AdamOptimizer(
+                learning_rate=EG_learning_rate,
+                beta1=beta1
+            ).minimize(
+                loss=self.loss_Dz,
+                var_list=self.D_z_variables
+            )
 
-        # optimizer for discriminator on image
-        self.D_img_optimizer = tf.train.AdamOptimizer(
-            learning_rate=EG_learning_rate,
-            beta1=beta1
-        ).minimize(
-            loss=self.loss_Di,
-            var_list=self.D_img_variables
-        )
+            # optimizer for discriminator on image
+            self.D_img_optimizer = tf.train.AdamOptimizer(
+                learning_rate=EG_learning_rate,
+                beta1=beta1
+            ).minimize(
+                loss=self.loss_Di,
+                var_list=self.D_img_variables
+            )
 
         # *********************************** tensorboard *************************************************************
         # for visualization (TensorBoard): $ tensorboard --logdir path/to/log-directory
@@ -302,8 +305,6 @@ class FaceAging(object):
             sample_label_gender[i, gender] = self.image_value_range[-1]
 
         # ******************************************* training *******************************************************
-        print '\n\tPreparing for training ...'
-
         # initialize the graph
         tf.global_variables_initializer().run()
 
@@ -313,6 +314,16 @@ class FaceAging(object):
                 print("\tSUCCESS ^_^")
             else:
                 print("\tFAILED >_<!")
+                # load init model
+                if use_init_model:
+                    if not os.path.exists('init_model/model-init.data-00000-of-00001'):
+                        from init_model.zip_opt import join
+                        try:
+                            join('init_model/model_parts', 'init_model/model-init.data-00000-of-00001')
+                        except:
+                            raise Exception('Error joining files')
+                    self.load_checkpoint(model_path='init_model')
+
 
         # epoch iteration
         num_batches = len(file_names) // self.size_batch
@@ -424,15 +435,15 @@ class FaceAging(object):
             self.sample(sample_images, sample_label_age, sample_label_gender, name)
             self.test(sample_images, sample_label_gender, name)
 
-
-            # save checkpoint for each 10 epoch
-            if np.mod(epoch, 10) == 9:
+            # save checkpoint for each 5 epoch
+            if np.mod(epoch, 5) == 4:
                 self.save_checkpoint()
 
         # save the trained model
         self.save_checkpoint()
         # close the summary writer
         self.writer.close()
+
 
     def encoder(self, image, reuse_variables=False):
         if reuse_variables:
@@ -611,14 +622,21 @@ class FaceAging(object):
             global_step=self.EG_global_step.eval()
         )
 
-    def load_checkpoint(self):
-        print("\n\tLoading pre-trained model ...")
-        checkpoint_dir = os.path.join(self.save_dir, 'checkpoint')
+    def load_checkpoint(self, model_path=None):
+        if model_path is None:
+            print("\n\tLoading pre-trained model ...")
+            checkpoint_dir = os.path.join(self.save_dir, 'checkpoint')
+        else:
+            print("\n\tLoading init model ...")
+            checkpoint_dir = model_path
         checkpoints = tf.train.get_checkpoint_state(checkpoint_dir)
         if checkpoints and checkpoints.model_checkpoint_path:
             checkpoints_name = os.path.basename(checkpoints.model_checkpoint_path)
-            self.saver.restore(self.session, os.path.join(checkpoint_dir, checkpoints_name))
-            return True
+            try:
+                self.saver.restore(self.session, os.path.join(checkpoint_dir, checkpoints_name))
+                return True
+            except:
+                return False
         else:
             return False
 
