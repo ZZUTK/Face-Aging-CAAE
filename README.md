@@ -13,7 +13,7 @@ TensorFlow implementation of the algorithm in the paper [Age Progression/Regress
 * ~~TensorFlow (r0.12)~~
     * ~~Please note that you will get errors if running with TensorFlow r1.0 because the definition of input arguments of some functions have changed, *e.g.*, `tf.concat` and `tf.nn.sigmoid_cross_entropy_with_logits`.~~ 
     
-* The code is updated to run with Tensorflow 1.7.0 in recent days, and an initial model is provided to better initialize the network. The old version is backed up to the folder `old_version`. 
+* The code is updated to run with Tensorflow 1.7.0, and an initial model is provided to better initialize the network. The old version is backed up to the folder `old_version`. 
 
 ## Datasets
 * FGNET
