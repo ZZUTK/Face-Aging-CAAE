@@ -98,7 +98,7 @@ The first row shows the input faces of different ages, and the other rows show t
 * [`main.py`](main.py) demonstrates `FaceAging.py`.
     
 ## Citation
-Zhifei Zhang, Yang Song, and Hairong Qi. "Age Progression/Regression by Conditional Adversarial Autoencoder." *IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, 2017.
+[Zhifei Zhang](http://web.eecs.utk.edu/~zzhang61/), [Yang Song](http://web.eecs.utk.edu/~ysong18/), and [Hairong Qi](https://www.eecs.utk.edu/people/faculty/hqi/). "Age Progression/Regression by Conditional Adversarial Autoencoder." *IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, 2017.
 ```
 @inproceedings{zhang2017age,
   title={Age Progression/Regression by Conditional Adversarial Autoencoder},
