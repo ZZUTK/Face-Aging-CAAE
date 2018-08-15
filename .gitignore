@@ -1,0 +1,6 @@
+*__pycache__*
+
+venv/
+data/
+save/
+init_model/model*
