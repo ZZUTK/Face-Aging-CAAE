@@ -5,3 +5,4 @@ data/
 save/
 init_model/model*
 test_image/
+test_image_pre/
