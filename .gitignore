@@ -4,3 +4,4 @@ venv/
 data/
 save/
 init_model/model*
+test_image/
