@@ -9,6 +9,7 @@ import argparse
 import imutils
 import dlib
 import cv2
+import os
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -22,7 +23,8 @@ args = vars(ap.parse_args())
 # initialize dlib's face detector (HOG-based) and then create
 # the facial landmark predictor and the face aligner
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(args["shape_predictor"])
+predictor = dlib.shape_predictor(os.path.join(
+    os.path.dirname(__file__), args["shape_predictor"]))
 fa = FaceAligner(predictor, desiredFaceWidth=256)
 
 # load the input image, resize it, and convert it to grayscale
