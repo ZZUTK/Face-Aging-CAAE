@@ -25,8 +25,10 @@ class FaceAging(object):
                  size_batch=100,  # mini-batch size for training and testing, must be square of an integer
                  num_input_channels=3,  # number of channels of input images
                  num_encoder_channels=64,  # number of channels of the first conv layer of encoder
-                 num_z_channels=50,  # number of channels of the layer z (noise or code)
-                 num_categories=10,  # number of categories (age segments) in the training dataset
+                 # number of channels of the layer z (noise or code)
+                 num_z_channels=50,
+                 # number of categories (age segments) in the training dataset
+                 num_categories=10,
                  num_gen_channels=1024,  # number of channels of the first deconv layer of generator
                  enable_tile_label=True,  # enable to tile the label
                  tile_ratio=1.0,  # ratio of the length between tiled label and z
@@ -54,7 +56,8 @@ class FaceAging(object):
         # ************************************* input to graph ********************************************************
         self.input_image = tf.placeholder(
             tf.float32,
-            [self.size_batch, self.size_image, self.size_image, self.num_input_channels],
+            [self.size_batch, self.size_image,
+                self.size_image, self.num_input_channels],
             name='input_images'
         )
         self.age = tf.placeholder(
@@ -73,7 +76,7 @@ class FaceAging(object):
             name='z_prior'
         )
         # ************************************* build the graph *******************************************************
-        print '\n\tBuilding graph ...'
+        print('\n\tBuilding graph ...')
 
         # encoder: input image --> z
         self.z = self.encoder(
@@ -121,28 +124,35 @@ class FaceAging(object):
 
         # ************************************* loss functions *******************************************************
         # loss function of encoder + generator
-        #self.EG_loss = tf.nn.l2_loss(self.input_image - self.G) / self.size_batch  # L2 loss
-        self.EG_loss = tf.reduce_mean(tf.abs(self.input_image - self.G))  # L1 loss
+        # self.EG_loss = tf.nn.l2_loss(self.input_image - self.G) / self.size_batch  # L2 loss
+        self.EG_loss = tf.reduce_mean(
+            tf.abs(self.input_image - self.G))  # L1 loss
 
         # loss function of discriminator on z
         self.D_z_loss_prior = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_z_prior_logits, labels=tf.ones_like(self.D_z_prior_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(
+                logits=self.D_z_prior_logits, labels=tf.ones_like(self.D_z_prior_logits))
         )
         self.D_z_loss_z = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_z_logits, labels=tf.zeros_like(self.D_z_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(
+                logits=self.D_z_logits, labels=tf.zeros_like(self.D_z_logits))
         )
         self.E_z_loss = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_z_logits, labels=tf.ones_like(self.D_z_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(
+                logits=self.D_z_logits, labels=tf.ones_like(self.D_z_logits))
         )
         # loss function of discriminator on image
         self.D_img_loss_input = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_input_logits, labels=tf.ones_like(self.D_input_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(
+                logits=self.D_input_logits, labels=tf.ones_like(self.D_input_logits))
         )
         self.D_img_loss_G = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_G_logits, labels=tf.zeros_like(self.D_G_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(
+                logits=self.D_G_logits, labels=tf.zeros_like(self.D_G_logits))
         )
         self.G_img_loss = tf.reduce_mean(
-            tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_G_logits, labels=tf.ones_like(self.D_G_logits))
+            tf.nn.sigmoid_cross_entropy_with_logits(
+                logits=self.D_G_logits, labels=tf.ones_like(self.D_G_logits))
         )
 
         # total variation to smooth the generated image
@@ -155,28 +165,41 @@ class FaceAging(object):
         # *********************************** trainable variables ****************************************************
         trainable_variables = tf.trainable_variables()
         # variables of encoder
-        self.E_variables = [var for var in trainable_variables if 'E_' in var.name]
+        self.E_variables = [
+            var for var in trainable_variables if 'E_' in var.name]
         # variables of generator
-        self.G_variables = [var for var in trainable_variables if 'G_' in var.name]
+        self.G_variables = [
+            var for var in trainable_variables if 'G_' in var.name]
         # variables of discriminator on z
-        self.D_z_variables = [var for var in trainable_variables if 'D_z_' in var.name]
+        self.D_z_variables = [
+            var for var in trainable_variables if 'D_z_' in var.name]
         # variables of discriminator on image
-        self.D_img_variables = [var for var in trainable_variables if 'D_img_' in var.name]
+        self.D_img_variables = [
+            var for var in trainable_variables if 'D_img_' in var.name]
 
         # ************************************* collect the summary ***************************************
         self.z_summary = tf.summary.histogram('z', self.z)
         self.z_prior_summary = tf.summary.histogram('z_prior', self.z_prior)
         self.EG_loss_summary = tf.summary.scalar('EG_loss', self.EG_loss)
-        self.D_z_loss_z_summary = tf.summary.scalar('D_z_loss_z', self.D_z_loss_z)
-        self.D_z_loss_prior_summary = tf.summary.scalar('D_z_loss_prior', self.D_z_loss_prior)
+        self.D_z_loss_z_summary = tf.summary.scalar(
+            'D_z_loss_z', self.D_z_loss_z)
+        self.D_z_loss_prior_summary = tf.summary.scalar(
+            'D_z_loss_prior', self.D_z_loss_prior)
         self.E_z_loss_summary = tf.summary.scalar('E_z_loss', self.E_z_loss)
-        self.D_z_logits_summary = tf.summary.histogram('D_z_logits', self.D_z_logits)
-        self.D_z_prior_logits_summary = tf.summary.histogram('D_z_prior_logits', self.D_z_prior_logits)
-        self.D_img_loss_input_summary = tf.summary.scalar('D_img_loss_input', self.D_img_loss_input)
-        self.D_img_loss_G_summary = tf.summary.scalar('D_img_loss_G', self.D_img_loss_G)
-        self.G_img_loss_summary = tf.summary.scalar('G_img_loss', self.G_img_loss)
-        self.D_G_logits_summary = tf.summary.histogram('D_G_logits', self.D_G_logits)
-        self.D_input_logits_summary = tf.summary.histogram('D_input_logits', self.D_input_logits)
+        self.D_z_logits_summary = tf.summary.histogram(
+            'D_z_logits', self.D_z_logits)
+        self.D_z_prior_logits_summary = tf.summary.histogram(
+            'D_z_prior_logits', self.D_z_prior_logits)
+        self.D_img_loss_input_summary = tf.summary.scalar(
+            'D_img_loss_input', self.D_img_loss_input)
+        self.D_img_loss_G_summary = tf.summary.scalar(
+            'D_img_loss_G', self.D_img_loss_G)
+        self.G_img_loss_summary = tf.summary.scalar(
+            'G_img_loss', self.G_img_loss)
+        self.D_G_logits_summary = tf.summary.histogram(
+            'D_G_logits', self.D_G_logits)
+        self.D_input_logits_summary = tf.summary.histogram(
+            'D_input_logits', self.D_input_logits)
         # for saving the graph and variables
         self.saver = tf.train.Saver(max_to_keep=2)
 
@@ -188,7 +211,8 @@ class FaceAging(object):
               enable_shuffle=True,  # enable shuffle of the dataset
               use_trained_model=True,  # use the saved checkpoint to initialize the network
               use_init_model=True,  # use the init model to initialize the network
-              weigts=(0.0001, 0, 0)  # the weights of adversarial loss and TV loss
+              # the weights of adversarial loss and TV loss
+              weigts=(0.0001, 0, 0)
               ):
 
         # *************************** load file names of images ******************************************************
@@ -200,12 +224,15 @@ class FaceAging(object):
 
         # *********************************** optimizer **************************************************************
         # over all, there are three loss functions, weights may differ from the paper because of different datasets
-        self.loss_EG = self.EG_loss + weigts[0] * self.G_img_loss + weigts[1] * self.E_z_loss + weigts[2] * self.tv_loss # slightly increase the params
+        self.loss_EG = self.EG_loss + weigts[0] * self.G_img_loss + weigts[1] * \
+            self.E_z_loss + weigts[2] * \
+            self.tv_loss  # slightly increase the params
         self.loss_Dz = self.D_z_loss_prior + self.D_z_loss_z
         self.loss_Di = self.D_img_loss_input + self.D_img_loss_G
 
         # set learning rate decay
-        self.EG_global_step = tf.Variable(0, trainable=False, name='global_step')
+        self.EG_global_step = tf.Variable(
+            0, trainable=False, name='global_step')
         EG_learning_rate = tf.train.exponential_decay(
             learning_rate=learning_rate,
             global_step=self.EG_global_step,
@@ -245,7 +272,8 @@ class FaceAging(object):
 
         # *********************************** tensorboard *************************************************************
         # for visualization (TensorBoard): $ tensorboard --logdir path/to/log-directory
-        self.EG_learning_rate_summary = tf.summary.scalar('EG_learning_rate', EG_learning_rate)
+        self.EG_learning_rate_summary = tf.summary.scalar(
+            'EG_learning_rate', EG_learning_rate)
         self.summary = tf.summary.merge([
             self.z_summary, self.z_prior_summary,
             self.D_z_loss_z_summary, self.D_z_loss_prior_summary,
@@ -255,7 +283,8 @@ class FaceAging(object):
             self.G_img_loss_summary, self.EG_learning_rate_summary,
             self.D_G_logits_summary, self.D_input_logits_summary
         ])
-        self.writer = tf.summary.FileWriter(os.path.join(self.save_dir, 'summary'), self.session.graph)
+        self.writer = tf.summary.FileWriter(os.path.join(
+            self.save_dir, 'summary'), self.session.graph)
 
         # ************* get some random samples as testing data to visualize the learning process *********************
         sample_files = file_names[0:self.size_batch]
@@ -319,11 +348,11 @@ class FaceAging(object):
                     if not os.path.exists('init_model/model-init.data-00000-of-00001'):
                         from init_model.zip_opt import join
                         try:
-                            join('init_model/model_parts', 'init_model/model-init.data-00000-of-00001')
+                            join('init_model/model_parts',
+                                 'init_model/model-init.data-00000-of-00001')
                         except:
                             raise Exception('Error joining files')
                     self.load_checkpoint(model_path='init_model')
-
 
         # epoch iteration
         num_batches = len(file_names) // self.size_batch
@@ -333,7 +362,8 @@ class FaceAging(object):
             for ind_batch in range(num_batches):
                 start_time = time.time()
                 # read batch images and labels
-                batch_files = file_names[ind_batch*self.size_batch:(ind_batch+1)*self.size_batch]
+                batch_files = file_names[ind_batch *
+                                         self.size_batch:(ind_batch+1)*self.size_batch]
                 batch = [load_image(
                     image_path=batch_file,
                     image_size=self.size_image,
@@ -341,7 +371,8 @@ class FaceAging(object):
                     is_gray=(self.num_input_channels == 1),
                 ) for batch_file in batch_files]
                 if self.num_input_channels == 1:
-                    batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
+                    batch_images = np.array(batch).astype(
+                        np.float32)[:, :, :, None]
                 else:
                     batch_images = np.array(batch).astype(np.float32)
                 batch_label_age = np.ones(
@@ -353,7 +384,8 @@ class FaceAging(object):
                     dtype=np.float
                 ) * self.image_value_range[0]
                 for i, label in enumerate(batch_files):
-                    label = int(str(batch_files[i]).split('/')[-1].split('_')[0])
+                    label = int(str(batch_files[i]).split(
+                        '/')[-1].split('_')[0])
                     if 0 <= label <= 5:
                         label = 0
                     elif 6 <= label <= 10:
@@ -375,7 +407,8 @@ class FaceAging(object):
                     else:
                         label = 9
                     batch_label_age[i, label] = self.image_value_range[-1]
-                    gender = int(str(batch_files[i]).split('/')[-1].split('_')[1])
+                    gender = int(str(batch_files[i]).split(
+                        '/')[-1].split('_')[1])
                     batch_label_gender[i, gender] = self.image_value_range[-1]
 
                 # prior distribution on the prior of z
@@ -387,7 +420,7 @@ class FaceAging(object):
 
                 # update
                 _, _, _, EG_err, Ez_err, Dz_err, Dzp_err, Gi_err, DiG_err, Di_err, TV = self.session.run(
-                    fetches = [
+                    fetches=[
                         self.EG_optimizer,
                         self.D_z_optimizer,
                         self.D_img_optimizer,
@@ -409,13 +442,16 @@ class FaceAging(object):
                 )
 
                 print("\nEpoch: [%3d/%3d] Batch: [%3d/%3d]\n\tEG_err=%.4f\tTV=%.4f" %
-                    (epoch+1, num_epochs, ind_batch+1, num_batches, EG_err, TV))
-                print("\tEz=%.4f\tDz=%.4f\tDzp=%.4f" % (Ez_err, Dz_err, Dzp_err))
-                print("\tGi=%.4f\tDi=%.4f\tDiG=%.4f" % (Gi_err, Di_err, DiG_err))
+                      (epoch+1, num_epochs, ind_batch+1, num_batches, EG_err, TV))
+                print("\tEz=%.4f\tDz=%.4f\tDzp=%.4f" %
+                      (Ez_err, Dz_err, Dzp_err))
+                print("\tGi=%.4f\tDi=%.4f\tDiG=%.4f" %
+                      (Gi_err, Di_err, DiG_err))
 
                 # estimate left run time
                 elapse = time.time() - start_time
-                time_left = ((num_epochs - epoch - 1) * num_batches + (num_batches - ind_batch - 1)) * elapse
+                time_left = ((num_epochs - epoch - 1) * num_batches +
+                             (num_batches - ind_batch - 1)) * elapse
                 print("\tTime left: %02d:%02d:%02d" %
                       (int(time_left / 3600), int(time_left % 3600 / 60), time_left % 60))
 
@@ -432,7 +468,8 @@ class FaceAging(object):
 
             # save sample images for each epoch
             name = '{:02d}.png'.format(epoch+1)
-            self.sample(sample_images, sample_label_age, sample_label_gender, name)
+            self.sample(sample_images, sample_label_age,
+                        sample_label_gender, name)
             self.test(sample_images, sample_label_gender, name)
 
             # save checkpoint for each 5 epoch
@@ -444,7 +481,6 @@ class FaceAging(object):
         # close the summary writer
         self.writer.close()
 
-
     def encoder(self, image, reuse_variables=False):
         if reuse_variables:
             tf.get_variable_scope().reuse_variables()
@@ -454,11 +490,11 @@ class FaceAging(object):
         for i in range(num_layers):
             name = 'E_conv' + str(i)
             current = conv2d(
-                    input_map=current,
-                    num_output_channels=self.num_encoder_channels * (2 ** i),
-                    size_kernel=self.size_kernel,
-                    name=name
-                )
+                input_map=current,
+                num_output_channels=self.num_encoder_channels * (2 ** i),
+                size_kernel=self.size_kernel,
+                name=name
+            )
             current = tf.nn.relu(current)
 
         # fully connection layer
@@ -477,7 +513,8 @@ class FaceAging(object):
             tf.get_variable_scope().reuse_variables()
         num_layers = int(np.log2(self.size_image)) - int(self.size_kernel / 2)
         if enable_tile_label:
-            duplicate = int(self.num_z_channels * tile_ratio / self.num_categories)
+            duplicate = int(self.num_z_channels *
+                            tile_ratio / self.num_categories)
         else:
             duplicate = 1
         z = concat_label(z, y, duplicate=duplicate)
@@ -495,20 +532,21 @@ class FaceAging(object):
             name=name
         )
         # reshape to cube for deconv
-        current = tf.reshape(current, [-1, size_mini_map, size_mini_map, self.num_gen_channels])
+        current = tf.reshape(
+            current, [-1, size_mini_map, size_mini_map, self.num_gen_channels])
         current = tf.nn.relu(current)
         # deconv layers with stride 2
         for i in range(num_layers):
             name = 'G_deconv' + str(i)
             current = deconv2d(
-                    input_map=current,
-                    output_shape=[self.size_batch,
-                                  size_mini_map * 2 ** (i + 1),
-                                  size_mini_map * 2 ** (i + 1),
-                                  int(self.num_gen_channels / 2 ** (i + 1))],
-                    size_kernel=self.size_kernel,
-                    name=name
-                )
+                input_map=current,
+                output_shape=[self.size_batch,
+                              size_mini_map * 2 ** (i + 1),
+                              size_mini_map * 2 ** (i + 1),
+                              int(self.num_gen_channels / 2 ** (i + 1))],
+                size_kernel=self.size_kernel,
+                name=name
+            )
             current = tf.nn.relu(current)
         name = 'G_deconv' + str(i+1)
         current = deconv2d(
@@ -545,10 +583,10 @@ class FaceAging(object):
         for i in range(len(num_hidden_layer_channels)):
             name = 'D_z_fc' + str(i)
             current = fc(
-                    input_vector=current,
-                    num_output_length=num_hidden_layer_channels[i],
-                    name=name
-                )
+                input_vector=current,
+                num_output_length=num_hidden_layer_channels[i],
+                name=name
+            )
             if enable_bn:
                 name = 'D_z_bn' + str(i)
                 current = tf.contrib.layers.batch_norm(
@@ -577,11 +615,11 @@ class FaceAging(object):
         for i in range(num_layers):
             name = 'D_img_conv' + str(i)
             current = conv2d(
-                    input_map=current,
-                    num_output_channels=num_hidden_layer_channels[i],
-                    size_kernel=self.size_kernel,
-                    name=name
-                )
+                input_map=current,
+                num_output_channels=num_hidden_layer_channels[i],
+                size_kernel=self.size_kernel,
+                name=name
+            )
             if enable_bn:
                 name = 'D_img_bn' + str(i)
                 current = tf.contrib.layers.batch_norm(
@@ -594,7 +632,8 @@ class FaceAging(object):
             current = tf.nn.relu(current)
             if i == 0:
                 current = concat_label(current, y)
-                current = concat_label(current, gender, int(self.num_categories / 2))
+                current = concat_label(
+                    current, gender, int(self.num_categories / 2))
         # fully connection layer
         name = 'D_img_fc1'
         current = fc(
@@ -631,9 +670,11 @@ class FaceAging(object):
             checkpoint_dir = model_path
         checkpoints = tf.train.get_checkpoint_state(checkpoint_dir)
         if checkpoints and checkpoints.model_checkpoint_path:
-            checkpoints_name = os.path.basename(checkpoints.model_checkpoint_path)
+            checkpoints_name = os.path.basename(
+                checkpoints.model_checkpoint_path)
             try:
-                self.saver.restore(self.session, os.path.join(checkpoint_dir, checkpoints_name))
+                self.saver.restore(self.session, os.path.join(
+                    checkpoint_dir, checkpoints_name))
                 return True
             except:
                 return False
@@ -708,7 +749,8 @@ class FaceAging(object):
         num_samples = int(np.sqrt(self.size_batch))
         file_names = glob(testing_samples_dir)
         if len(file_names) < num_samples:
-            print 'The number of testing images is must larger than %d' % num_samples
+            print('The number of testing images is must larger than %d' %
+                  num_samples)
             exit(0)
         sample_files = file_names[0:num_samples]
         sample = [load_image(
@@ -736,6 +778,5 @@ class FaceAging(object):
         self.test(images, gender_male, 'test_as_male.png')
         self.test(images, gender_female, 'test_as_female.png')
 
-        print '\n\tDone! Results are saved as %s\n' % os.path.join(self.save_dir, 'test', 'test_as_xxx.png')
-
-
+        print("\n\tDone! Results are saved as %s\n" %
+              os.path.join(self.save_dir, 'test', 'test_as_xxx.png'))
