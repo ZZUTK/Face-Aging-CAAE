@@ -1,8 +1,9 @@
 # Age Progression/Regression by Conditional Adversarial Autoencoder (CAAE)
 
 TensorFlow implementation of the algorithm in the paper [Age Progression/Regression by Conditional Adversarial Autoencoder](http://web.eecs.utk.edu/~zzhang61/docs/papers/2017_CVPR_Age.pdf).
-## Other implementations
-<a href="https://github.com/mattans/AgeProgression/tree/v1.0.0"> [PyTorch]</a> (by Mattan Serry)
+
+[Pytorch implementation](https://github.com/mattans/AgeProgression/tree/v1.0.0) by Mattan Serry. 
+
 <p align="center">
   <img src="demo/method.png" width="500">
 </p>
