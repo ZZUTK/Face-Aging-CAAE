@@ -96,7 +96,7 @@ The first row shows the input faces of different ages, and the other rows show t
 
 ## Files
 * [`FaceAging.py`](FaceAging.py) is a class that builds and initializes the model, and implements training and testing related stuff
-* [`ops.py`](ops.py) consists of functions called `FaceAging.py` to implement options of convolution, deconvolution, fully connection, leaky ReLU, load and save images.   
+* [`ops.py`](ops.py) consists of functions called by `FaceAging.py` to implement options of convolution, deconvolution, fully connection, leaky ReLU, load and save images.   
 * [`main.py`](main.py) demonstrates `FaceAging.py`.
     
 ## Citation
