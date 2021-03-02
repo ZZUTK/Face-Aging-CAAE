@@ -53,6 +53,6 @@ if __name__ == '__main__':
     try:
         join('init_model/model_parts', 'init_model/model-init.data-00000-of-00001')
     except:
-        print 'Error joining files:'
+        print('Error joining files:')
         
        

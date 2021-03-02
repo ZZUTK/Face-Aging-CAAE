@@ -73,7 +73,7 @@ class FaceAging(object):
             name='z_prior'
         )
         # ************************************* build the graph *******************************************************
-        print '\n\tBuilding graph ...'
+        print('\n\tBuilding graph ...')
 
         # encoder: input image --> z
         self.z = self.encoder(
@@ -708,7 +708,7 @@ class FaceAging(object):
         num_samples = int(np.sqrt(self.size_batch))
         file_names = glob(testing_samples_dir)
         if len(file_names) < num_samples:
-            print 'The number of testing images is must larger than %d' % num_samples
+            print('The number of testing images is must larger than %d' % num_samples)
             exit(0)
         sample_files = file_names[0:num_samples]
         sample = [load_image(
@@ -736,6 +736,6 @@ class FaceAging(object):
         self.test(images, gender_male, 'test_as_male.png')
         self.test(images, gender_female, 'test_as_female.png')
 
-        print '\n\tDone! Results are saved as %s\n' % os.path.join(self.save_dir, 'test', 'test_as_xxx.png')
+        print('\n\tDone! Results are saved as %s\n' % os.path.join(self.save_dir, 'test', 'test_as_xxx.png'))
 
 
