@@ -30,5 +30,4 @@ if __name__ == '__main__':
     image_list = [pngdir + img for img in pngfiles]
     if args.dir == 'test':
         image_list = image_list[0:-1]
-        print(len(image_list))
     mergegif(image_list, gifdir)
