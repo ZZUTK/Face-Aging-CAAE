@@ -3,7 +3,9 @@ from FaceAging import FaceAging
 from os import environ
 import argparse
 
-environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # disable notification, warning, error
+environ['CUDA_VISIBLE_DEVICES'] = '0'
+
 
 
 def str2bool(v):
@@ -33,7 +35,8 @@ def main(_):
     pprint.pprint(FLAGS)
 
     config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
+    config.gpu_options.allow_growth = False
+    config.gpu_options.per_process_gpu_memory_fraction = 0.90 
 
     with tf.Session(config=config) as session:
         model = FaceAging(
