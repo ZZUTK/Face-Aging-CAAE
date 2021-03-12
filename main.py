@@ -9,7 +9,8 @@ environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 
 def str2bool(v):
-    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+    ## a function transform string to bool.
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):  ## lower() method provides lower case of a string.
         return True
     elif v.lower() in ('no', 'false', 'f', 'n', '0'):
         return False
@@ -17,12 +18,13 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
+## parse arguments
 parser = argparse.ArgumentParser(description='CAAE')
 parser.add_argument('--is_train', type=str2bool, default=True)
 parser.add_argument('--epoch', type=int, default=50, help='number of epochs')
 parser.add_argument('--dataset', type=str, default='UTKFace', help='training dataset name that stored in ./data')
 parser.add_argument('--savedir', type=str, default='save', help='dir of saving checkpoints and intermediate training results')
-parser.add_argument('--testdir', type=str, default='None', help='dir of testing images')
+parser.add_argument('--testdir', type=str, default='test', help='dir of testing images')
 parser.add_argument('--use_trained_model', type=str2bool, default=True, help='whether train from an existing model or from scratch')
 parser.add_argument('--use_init_model', type=str2bool, default=True, help='whether train from the init model if cannot find an existing model')
 FLAGS = parser.parse_args()
@@ -30,14 +32,16 @@ FLAGS = parser.parse_args()
 
 def main(_):
 
-    # print settings
-    import pprint
-    pprint.pprint(FLAGS)
+    ## print settings
+    from pprint import pprint
+    pprint(FLAGS)  ## pprint is a more elegant version of print, which can print out long, complex structures in separate lines.
 
+    ## add tensorflow configs
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = False
     config.gpu_options.per_process_gpu_memory_fraction = 0.90 
 
+    ## create session
     with tf.Session(config=config) as session:
         model = FaceAging(
             session,  # TensorFlow session
@@ -47,13 +51,13 @@ def main(_):
         )
         if FLAGS.is_train:
             print('\n\tTraining Mode')
-            if not FLAGS.use_trained_model:
+            if not FLAGS.use_trained_model:  ## pre-train, go for 10 epochs
                 print('\n\tPre-train the network')
                 model.train(
                     num_epochs=10,  # number of epochs
                     use_trained_model=FLAGS.use_trained_model,
                     use_init_model=FLAGS.use_init_model,
-                    weigts=(0, 0, 0)
+                    weigts=(0, 0, 0)  ## the weights of adversarial loss and TV loss 
                 )
                 print('\n\tPre-train is done! The training will start.')
             model.train(
