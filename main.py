@@ -38,8 +38,8 @@ def main(_):
 
     ## add tensorflow configs
     config = tf.ConfigProto()
-    config.gpu_options.allow_growth = False
-    config.gpu_options.per_process_gpu_memory_fraction = 0.90 
+    config.gpu_options.allow_growth = True
+    # config.gpu_options.per_process_gpu_memory_fraction = 0.90 
 
     ## create session
     with tf.Session(config=config) as session:
@@ -68,7 +68,7 @@ def main(_):
         else:
             print('\n\tTesting Mode')
             model.custom_test(
-                testing_samples_dir=FLAGS.testdir + '/*jpg'
+                testing_samples_dir=FLAGS.testdir + '/*png'
             )
 
 
