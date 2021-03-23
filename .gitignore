@@ -5,3 +5,5 @@
 /init_model/checkpoint
 /init_model/model-init.*
 /data
+
+/.ipynb_checkpoints
