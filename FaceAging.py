@@ -120,7 +120,7 @@ class FaceAging(object):
         )
 
         # ************************************* loss functions *******************************************************
-        # loss function of encoder + generator
+        # loss function of encoder + generator, that's why they call it EGloss
         #self.EG_loss = tf.nn.l2_loss(self.input_image - self.G) / self.size_batch  # L2 loss
         self.EG_loss = tf.reduce_mean(tf.abs(self.input_image - self.G))  # L1 loss
 
@@ -154,6 +154,9 @@ class FaceAging(object):
 
         # *********************************** trainable variables ****************************************************
         trainable_variables = tf.trainable_variables()
+        # from pprint import pprint
+        # print("trainable variables:")
+        # pprint(trainable_variables)
         # variables of encoder
         self.E_variables = [var for var in trainable_variables if 'E_' in var.name]
         # variables of generator
@@ -194,7 +197,7 @@ class FaceAging(object):
         # *************************** load file names of images ******************************************************
         file_names = glob(os.path.join('./data', self.dataset_name, '*.jpg'))
         size_data = len(file_names)
-        np.random.seed(seed=2017)
+        np.random.seed(seed=1120171140)
         if enable_shuffle:
             np.random.shuffle(file_names)
 
@@ -707,6 +710,7 @@ class FaceAging(object):
 
         num_samples = int(np.sqrt(self.size_batch))
         file_names = glob(testing_samples_dir)
+        print(file_names)
         if len(file_names) < num_samples:
             print('The number of testing images is must larger than %d' % num_samples)
             exit(0)
