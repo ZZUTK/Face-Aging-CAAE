@@ -4,5 +4,5 @@
 /data
 /.vscode
 /.ipynb_checkpoints
-untitled.ipynb
+*.ipynb
 /init_model/model-init.*
