@@ -1,10 +1,7 @@
 /__pycache__
 /save
 /init_model/__pycache__
-/init_model/model_parts
-/init_model/checkpoint
-/init_model/model-init.*
 /data
-
+/.vscode
 /.ipynb_checkpoints
 untitled.ipynb
