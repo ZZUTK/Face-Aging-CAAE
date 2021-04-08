@@ -6,3 +6,5 @@
 /.ipynb_checkpoints
 *.ipynb
 /init_model/model-init.*
+/demo
+/.empty
