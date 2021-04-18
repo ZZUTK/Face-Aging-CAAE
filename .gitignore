@@ -8,3 +8,4 @@
 /init_model/model-init.*
 /demo
 /.empty
+/server.save
