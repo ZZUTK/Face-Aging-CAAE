@@ -1,18 +1,23 @@
 import os
 import imageio
 import argparse
-
+import numpy as np
 
 parser = argparse.ArgumentParser(description='CAAE')
 parser.add_argument('--dir', '-d', type=str)
 
-def mergegif(im, gifdir, interval=0.2):
+def epoch2gif(im, gifdir, interval=0.2):
     frames = []
     for image in image_list:
         if image.endswith('.png'):
             frames.append(imageio.imread(image))
     imageio.mimsave(gifdir, frames, 'GIF', duration = interval)
 
+def age2gif(im, gifdir, fps=5):
+    # concatenate
+    for i in range(10):
+        frames = []
+        avatar = im[128 * (i):128 * (i + 1) - 1]
 
 if __name__ == '__main__':
     args = parser.parse_args()
