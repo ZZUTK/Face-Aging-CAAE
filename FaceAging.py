@@ -180,6 +180,7 @@ class FaceAging(object):
         self.G_img_loss_summary = tf.summary.scalar('G_img_loss', self.G_img_loss)
         self.D_G_logits_summary = tf.summary.histogram('D_G_logits', self.D_G_logits)
         self.D_input_logits_summary = tf.summary.histogram('D_input_logits', self.D_input_logits)
+        # TODO: save weights of kernels via tf.summary.distribution
         # for saving the graph and variables
         self.saver = tf.train.Saver(max_to_keep=2)
 

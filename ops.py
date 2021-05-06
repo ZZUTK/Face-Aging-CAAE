@@ -149,8 +149,3 @@ def spectral_norm(w, iteration=1):
         w_norm = tf.reshape(w_norm, w_shape)
 
     return w_norm
-
-
-
-
-
