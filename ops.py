@@ -4,7 +4,7 @@ import numpy as np
 from scipy.misc import imread, imresize, imsave
 
 
-def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d'):
+def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d', sn=True):
     with tf.variable_scope(name):
         # stddev = np.sqrt(2.0 / (np.sqrt(input_map.get_shape()[-1].value * num_output_channels) * size_kernel ** 2))
         stddev = .02
@@ -20,7 +20,10 @@ def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d
             dtype=tf.float32,
             initializer=tf.constant_initializer(0.0)
         )
-        conv = tf.nn.conv2d(input_map, kernel, strides=[1, stride, stride, 1], padding='SAME')
+        if sn == True:
+            conv = tf.nn.conv2d(input_map, sn(kernel), strides=[1, stride, stride, 1], padding='SAME')
+        else:
+            conv = tf.nn.conv2d(input_map, kernel, strides=[1, stride, stride, 1], padding='SAME')
         return tf.nn.bias_add(conv, biases)
 
 
