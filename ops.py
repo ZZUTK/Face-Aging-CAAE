@@ -21,7 +21,7 @@ def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d
             initializer=tf.constant_initializer(0.0)
         )
         if sn == True:
-            conv = tf.nn.conv2d(input_map, sn(kernel), strides=[1, stride, stride, 1], padding='SAME')
+            conv = tf.nn.conv2d(input_map, spectral_norm(kernel), strides=[1, stride, stride, 1], padding='SAME')
         else:
             conv = tf.nn.conv2d(input_map, kernel, strides=[1, stride, stride, 1], padding='SAME')
         return tf.nn.bias_add(conv, biases)
@@ -149,3 +149,6 @@ def spectral_norm(w, iteration=1):
         w_norm = tf.reshape(w_norm, w_shape)
 
     return w_norm
+
+def l2_norm(v, eps=1e-12):
+    return v / (tf.reduce_sum(v ** 2) ** 0.5 + eps)
