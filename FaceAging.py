@@ -121,8 +121,8 @@ class FaceAging(object):
 
         # ************************************* loss functions *******************************************************
         # loss function of encoder + generator, that's why they call it EGloss
-        #self.EG_loss = tf.nn.l2_loss(self.input_image - self.G) / self.size_batch  # L2 loss
-        self.EG_loss = tf.reduce_mean(tf.abs(self.input_image - self.G))  # L1 loss
+        # self.EG_loss = tf.nn.l2_loss(self.input_image - self.G)# / self.size_batch  # L2 loss
+        self.EG_loss = tf.reduce_mean(tf.abs(self.input_image - self.G)) / self.size_batch # L1 loss
 
         # loss function of discriminator on z
         self.D_z_loss_prior = tf.reduce_mean(
@@ -135,6 +135,7 @@ class FaceAging(object):
             tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_z_logits, labels=tf.ones_like(self.D_z_logits))
         )
         # loss function of discriminator on image
+        #TODO: switch to hinge loss
         self.D_img_loss_input = tf.reduce_mean(
             tf.nn.sigmoid_cross_entropy_with_logits(logits=self.D_input_logits, labels=tf.ones_like(self.D_input_logits))
         )
@@ -151,6 +152,9 @@ class FaceAging(object):
         self.tv_loss = (
             (tf.nn.l2_loss(self.G[:, 1:, :, :] - self.G[:, :self.size_image - 1, :, :]) / tv_y_size) +
             (tf.nn.l2_loss(self.G[:, :, 1:, :] - self.G[:, :, :self.size_image - 1, :]) / tv_x_size)) / self.size_batch
+
+        self.psnr = calc_psnr(self.input_image, self.G, size_batch)
+        self.mae = calc_mae(self.input_image, self.G, size_batch)
 
         # *********************************** trainable variables ****************************************************
         trainable_variables = tf.trainable_variables()
@@ -180,6 +184,10 @@ class FaceAging(object):
         self.G_img_loss_summary = tf.summary.scalar('G_img_loss', self.G_img_loss)
         self.D_G_logits_summary = tf.summary.histogram('D_G_logits', self.D_G_logits)
         self.D_input_logits_summary = tf.summary.histogram('D_input_logits', self.D_input_logits)
+
+        self.psnr_summary = tf.summary.scalar('PSNR', self.psnr)
+        self.mae_summary = tf.summary.scalar('MAE', self.mae)
+
         # TODO: save weights of kernels via tf.summary.distribution
         # for saving the graph and variables
         self.saver = tf.train.Saver(max_to_keep=2)
@@ -257,8 +265,11 @@ class FaceAging(object):
             self.EG_loss_summary, self.E_z_loss_summary,
             self.D_img_loss_input_summary, self.D_img_loss_G_summary,
             self.G_img_loss_summary, self.EG_learning_rate_summary,
-            self.D_G_logits_summary, self.D_input_logits_summary
+            self.D_G_logits_summary, self.D_input_logits_summary,
+            self.mae_summary, self.psnr_summary
         ])
+        if not os.path.exists(self.save_dir):
+            os.mkdir(self.save_dir)
         self.writer = tf.summary.FileWriter(os.path.join(self.save_dir, 'summary'), self.session.graph)
 
         # ************* get some random samples as testing data to visualize the learning process *********************

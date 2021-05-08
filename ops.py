@@ -4,7 +4,7 @@ import numpy as np
 from scipy.misc import imread, imresize, imsave
 
 
-def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d', sn=True):
+def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d', sn=False):
     with tf.variable_scope(name):
         # stddev = np.sqrt(2.0 / (np.sqrt(input_map.get_shape()[-1].value * num_output_channels) * size_kernel ** 2))
         stddev = .02
@@ -20,6 +20,8 @@ def conv2d(input_map, num_output_channels, size_kernel=5, stride=2, name='conv2d
             dtype=tf.float32,
             initializer=tf.constant_initializer(0.0)
         )
+        # TODO: set sn=false in encoder and sn=true in discriminator in contrast. or set all of them sn=true
+        #       use hingeloss to replace entropy in ez and dz 
         if sn == True:
             conv = tf.nn.conv2d(input_map, spectral_norm(kernel), strides=[1, stride, stride, 1], padding='SAME')
         else:
@@ -150,5 +152,14 @@ def spectral_norm(w, iteration=1):
 
     return w_norm
 
+
 def l2_norm(v, eps=1e-12):
     return v / (tf.reduce_sum(v ** 2) ** 0.5 + eps)
+
+
+def calc_psnr(p, q, bs):
+    return tf.reduce_sum(tf.image.psnr(p, q, max_val=255)) / bs
+
+
+def calc_mae(p, q, bs):
+    return tf.reduce_sum(tf.abs(p - q)) / bs
